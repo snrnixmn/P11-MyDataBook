@@ -2,23 +2,22 @@ package com.example.p12_mydatabook;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BioFragment extends Fragment {
+public class BioFragment extends Fragment implements BioDialog.OnInputSelected{
+    private static final String TAG = "BioFragment";
     Button btnEdit;
+    TextView tvBio;
 
     public BioFragment() {
         // Required empty public constructor
@@ -29,7 +28,28 @@ public class BioFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.biofragment, container, false);
+        View view = inflater.inflate(R.layout.biofragment, container, false);
+        btnEdit = view.findViewById(R.id.btnEditBio);
+        tvBio = view.findViewById(R.id.tvBio);
 
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: opening dialog");
+
+                BioDialog dialog = new BioDialog();
+                dialog.setTargetFragment(BioFragment.this, 1);
+                dialog.show(getFragmentManager(), "BioDialog");
+            }
+        });
+
+
+        return view;
+    }
+
+    @Override
+    public void sendInput(String input) {
+        Log.d(TAG, "sendInput: found incoming input: " + input);
+        tvBio.setText(input);
     }
 }

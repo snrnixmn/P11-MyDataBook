@@ -17,6 +17,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class MainActivity extends AppCompatActivity {
 
     private String[] drawerItems;
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawer_layout);
         drawerList = findViewById(R.id.left_drawer);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
         drawerItems = new String[]{"Bio", "Vaccination", "Anniversary", "About US"};
         ab = getSupportActionBar();
@@ -85,6 +88,13 @@ public class MainActivity extends AppCompatActivity {
                 currentTitle = drawerItems[position];
                 ab.setTitle(currentTitle);
                 drawerLayout.closeDrawer(drawerList);
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(drawerList);
             }
         });
 
